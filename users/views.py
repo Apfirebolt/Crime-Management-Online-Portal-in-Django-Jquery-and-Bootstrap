@@ -17,7 +17,7 @@ class Register(FormView):
 
     def form_valid(self, form):
         form.save()
-        return HttpResponseRedirect(reverse('users:dashboard'))
+        return HttpResponseRedirect(reverse('home'))
 
 
 

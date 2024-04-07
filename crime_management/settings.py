@@ -203,8 +203,8 @@ AUTH_USER_MODEL = 'users.User'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # AWS credentials
-AWS_ACCESS_KEY_ID = 'your_access_key_id'
-AWS_SECRET_ACCESS_KEY = 'your_secret_access_key'
+AWS_ACCESS_KEY_ID = 'your-access-key-id'
+AWS_SECRET_ACCESS_KEY = 'your-secret-access-key'
 
 # Configure S3 storage
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -212,6 +212,6 @@ AWS_STORAGE_BUCKET_NAME = 'your-bucket-name'  # Replace with your bucket name
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME  # Optional for custom domain
 
 # Optional: Configure S3 object permissions (default is private)
-AWS_S3_OBJECT_PARAMETERS = {
-    'ACL': 'public-read'  # Set to 'public-read' for public access
-}
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'ACL': 'public-read'  # Set to 'public-read' for public access
+# }

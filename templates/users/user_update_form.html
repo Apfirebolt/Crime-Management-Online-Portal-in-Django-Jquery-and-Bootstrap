@@ -49,6 +49,8 @@
             {{ form.profile_image|add_class:"form-file-control" }}
         </div>
 
+        <img src="{{ user.profile_image.url }}" class="img-thumbnail" width="100" height="100">
+
         <div class="form-group">
             <label for="{{ form.phone_no_for_label }}">Your Phone Number:</label>
             {{ form.phone_no|add_class:"form-control" }}
