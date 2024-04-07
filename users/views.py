@@ -13,11 +13,11 @@ from django.contrib import messages
 
 class Register(FormView):
     form_class = RegisterForm
-    template_name = 'accounts/register.html'
+    template_name = 'users/register.html'
 
     def form_valid(self, form):
         form.save()
-        return HttpResponseRedirect(reverse('accounts:dashboard'))
+        return HttpResponseRedirect(reverse('users:dashboard'))
 
 
 
@@ -42,7 +42,7 @@ def user_login(request):
             return HttpResponse('<h2>Invalid login credentials applied </h2>')
 
     else:
-        return render(request, 'accounts/login.html', {})
+        return render(request, 'users/login.html', {})
 
 
 class AccountSettings(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -56,7 +56,7 @@ class AccountSettings(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class Dashboard(LoginRequiredMixin, View):
-    template_name = 'accounts/dashboard.html'
+    template_name = 'users/dashboard.html'
 
     def get(self, request, *args, **kwargs):
         user_object = User.objects.get(pk=request.user.id)
