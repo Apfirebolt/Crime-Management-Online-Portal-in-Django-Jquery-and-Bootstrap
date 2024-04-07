@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'widget_tweaks',
 
-    'accounts',
+    'users',
     'complaints',
 ]
 
@@ -108,11 +108,11 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'pass123',
         'HOST': 'localhost',  
-        'PORT': '5432',        
+        'PORT': '5432',      
     }
 }
 
-AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "users.User"
 
 
 # Password validation
@@ -194,8 +194,8 @@ SITE_URL = "http://127.0.0.1:8000"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/accounts/dashboard'
+LOGIN_REDIRECT_URL = '/users/dashboard'
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'users.User'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

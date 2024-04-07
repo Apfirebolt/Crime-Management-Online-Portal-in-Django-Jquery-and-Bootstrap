@@ -14,7 +14,7 @@
 
    <div class="w-50 mx-auto my-3">
    <h4 class="text-center mx-auto my-3">CRIME MANAGEMENT PORTAL - LOGIN</h4>
-        <form method="post" action="{% url 'accounts:login' %}">
+        <form method="post" action="{% url 'users:login' %}">
               {% csrf_token %}
 
               <div class="form-group">
@@ -29,7 +29,7 @@
 
               <div class="container text-center">
                   <input type="submit" class="btn btn-warning col-md-4" name="" value="Login">
-                  <button class="btn btn-warning col-md-4"><a href="{% url 'accounts:register' %}">Register</a></button>
+                  <button class="btn btn-warning col-md-4"><a href="{% url 'users:register' %}">Register</a></button>
               </div>
 
         </form>

@@ -23,7 +23,7 @@ class RegisterComplaint(SuccessMessageMixin, CreateView):
         messages.success(self.request,
                          'Your complaint was registered successfully, one of our correspondents would soon get back to you')
 
-        return HttpResponseRedirect(reverse('accounts:dashboard'))
+        return HttpResponseRedirect(reverse('users:dashboard'))
 
 
 class ListComplaints(ListView):

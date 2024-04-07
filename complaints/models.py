@@ -1,7 +1,7 @@
 from django.db import models
 from . choices import CRIME_CATEGORY
 from django.urls import reverse
-from Test import settings
+from crime_management import settings
 from django.template.defaultfilters import slugify
 
 
@@ -16,7 +16,7 @@ class Complaint(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse('accounts:dashboard')
+        return reverse('users:dashboard')
 
     def __str__(self):
         return self.title
