@@ -1,8 +1,16 @@
 import { Form, Input, Button } from "antd";
+import useAuthStore from "../stores/authStore";
 
 const Register = () => {
+  const { register } = useAuthStore();
   const onFinish = (values) => {
     console.log("Success:", values);
+    let userData = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    };
+    register(userData);
   };
 
   const onFinishFailed = (errorInfo) => {

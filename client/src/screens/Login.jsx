@@ -1,8 +1,11 @@
 import { Form, Input, Button } from "antd";
+import useAuthStore from "../stores/authStore";
 
 const Login = () => {
+  const { login } = useAuthStore();
   const onFinish = (values) => {
     console.log("Success:", values);
+    login(values.email, values.password);
   };
 
   const onFinishFailed = (errorInfo) => {

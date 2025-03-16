@@ -13,9 +13,6 @@ const AppHeader = () => {
   return (
     <Header>
       <div className="logo" />
-      <p>
-        A small change
-      </p>
       <Menu
         theme="dark"
         mode="horizontal"

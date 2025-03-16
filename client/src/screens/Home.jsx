@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <div style={{ padding: "16px", margin: "16px" }}>
-      <h1>Space X API App</h1>
+      <h1>Crime Management Portal</h1>
       <Drawer
         title="SpaceX Info"
         placement="left"
@@ -41,7 +41,7 @@ const Home = () => {
         </Button>
       </Space>
       <p>
-        Welcome to the SpaceX API app. This app is built using React, Redux,
+        Welcome to the Crime Management Portal app. This app is built using React, Redux,
         Redux-toolkit and Ant Design. The app fetches data from the SpaceX API
         and displays it in a user-friendly way.
       </p>
