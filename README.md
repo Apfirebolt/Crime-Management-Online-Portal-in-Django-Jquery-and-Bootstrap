@@ -38,3 +38,9 @@ This was my college project, now undergoing through some major transformations.
 - Security: The application implements authentication and authorization mechanisms to ensure secure access to user data and prevent unauthorized actions.
 
 - Responsive Design: The application is designed to be responsive and accessible on different devices, including desktops, tablets, and mobile phones.
+
+## Potential Issue
+
+- Not able to read env file
+
+- Not able to load admin css and js files, need to configure static directory
