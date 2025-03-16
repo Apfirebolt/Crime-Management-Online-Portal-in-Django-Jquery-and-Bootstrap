@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../plugins/interceptor";
 import { Card, Typography, List, Drawer, Space, Button, Row, Col } from "antd";
 import Loader from "../components/Loader";
+import ComplaintForm from "../components/ComplaintForm";
 import useAuthStore from "../stores/authStore";
+import useComplaintStore from "../stores/complaintStore";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const { Title, Paragraph } = Typography;
   const { user } = useAuthStore();
+  const { complaints, fetchComplaints, createComplaint, deleteComplaint } = useComplaintStore();
+
+  console.log('Complaints:', complaints);
 
   const showDrawer = () => {
     setOpen(true);
@@ -15,6 +20,26 @@ const Dashboard = () => {
   const onClose = () => {
     setOpen(false);
   };
+
+  const addComplaintUtil = async (complaintData) => {
+    const response = await createComplaint(complaintData);
+    if (response && response.status === 201) {
+      fetchComplaints();
+      setOpen(false);
+    }
+  };
+
+  const deleteComplaintUtil = async (id) => {
+    const response = await deleteComplaint(id);
+    if (response && response.status === 204) {
+      await fetchComplaints();
+    }
+  }
+
+  useEffect(() => {
+    fetchComplaints();
+  }
+  , [fetchComplaints]);
 
   return (
     <div
@@ -24,24 +49,29 @@ const Dashboard = () => {
         {user ? `Welcome to the dashboard, ${user.userData.email}` : ""}
       </Title>
       <Row gutter={16}>
-        <Col span={8}>
-          <Card title="Card 1" bordered={false}>
-            Card content
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card title="Card 2" bordered={false}>
-            Card content
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card title="Card 3" bordered={false}>
-            Card content
-          </Card>
-        </Col>
+        {complaints.results && complaints.results.length > 0 ? (
+          complaints.results.map((complaint, index) => (
+            <Col span={8} key={index}>
+              <Card title={`${complaint.title}`} style={{ marginBottom: "16px" }}>
+                <p>{complaint.description}</p>
+                <p><strong>Location:</strong> {complaint.location}</p>
+                <p><strong>Category:</strong> {complaint.category}</p>
+                <Button type="primary" onClick={() => deleteComplaintUtil(complaint.id)} backgroundColor="red">
+                  Delete
+                </Button>
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <Col span={24}>
+            <Card>
+              No complaints available.
+            </Card>
+          </Col>
+        )}
       </Row>
       <Drawer
-        title="Details"
+        title="Complaint Form"
         placement="left"
         closable={false}
         onClose={onClose}
@@ -50,10 +80,11 @@ const Dashboard = () => {
         <Button type="primary" onClick={onClose}>
           Close
         </Button>
+        <ComplaintForm addComplaint={addComplaintUtil} />
       </Drawer>
       <Space style={{ marginTop: "16px" }}>
         <Button type="primary" onClick={showDrawer}>
-          Show Details
+          Add Complaint
         </Button>
       </Space>
       <Paragraph style={{ marginTop: "16px" }}>
