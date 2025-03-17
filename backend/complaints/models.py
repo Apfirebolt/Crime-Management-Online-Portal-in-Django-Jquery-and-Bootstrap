@@ -14,5 +14,8 @@ class Complaint(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def category_name(self):
+        return dict(CRIME_CATEGORY)[self.category]
+
     def __str__(self):
         return self.title + ' - ' + self.location

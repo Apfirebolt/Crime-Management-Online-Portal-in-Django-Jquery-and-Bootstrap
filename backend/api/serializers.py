@@ -86,6 +86,8 @@ class ListCustomUserSerializer(serializers.ModelSerializer):
 
 class ComplaintSerializer(serializers.ModelSerializer):
 
+    category_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Complaint
         fields = (
@@ -93,9 +95,13 @@ class ComplaintSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "category",
+            "category_name",
             "location",
             "created_at",
             "updated_at",
             "created_by",
         )
         read_only_fields = ("created_by",)
+    
+    def get_category_name(self, obj):
+        return obj.category_name()

@@ -15,7 +15,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) #This is the backend base dir
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = ')+itp-2z-0axz%a@i=#jac2#aag(gnj#k0k)qn#$kvel8*8ex9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+# DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = True
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
@@ -79,11 +81,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'crime_management.urls'
 
+CLIENT_BUILD_DIR = os.path.join(os.path.dirname(BASE_DIR), 'client', 'dist')
+
+print('Client Build ', CLIENT_BUILD_DIR)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [CLIENT_BUILD_DIR], # Add the build directory to templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -187,11 +192,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+
+
 STATIC_URL = '/staticfiles/'
+
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    os.path.join(CLIENT_BUILD_DIR, 'assets'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') #Where static files will be collected
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

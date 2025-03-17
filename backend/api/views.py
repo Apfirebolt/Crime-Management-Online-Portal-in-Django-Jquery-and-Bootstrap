@@ -112,7 +112,7 @@ class ComplaintViewSet(ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_403_FORBIDDEN)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(self.get_queryset().filter(created_by=request.user))
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
