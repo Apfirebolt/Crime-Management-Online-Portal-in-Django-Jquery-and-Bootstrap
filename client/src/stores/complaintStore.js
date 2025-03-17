@@ -84,13 +84,9 @@ const useComplaintStore = create((set) => ({
           headers: { Authorization: `Bearer ${user.access}` },
         }
       );
-      const { data } = response;
-      set((state) => ({
-        complaints: state.complaints.map((complaint) =>
-          complaint.id === id ? data : complaint
-        ),
-        loading: false,
-      }));
+      if (response && response.status === 200) {
+        set({ loading: false });
+      }
       return response;
     } catch (error) {
       console.error(error);
@@ -106,7 +102,6 @@ const useComplaintStore = create((set) => ({
       if (!user) {
         throw new Error("User not authenticated");
       }
-      console.log('user access', user.access);
       const response = await axiosInstance.delete(`complaints/${id}/`, {
         headers: { Authorization: `Bearer ${user.access}` },
       });

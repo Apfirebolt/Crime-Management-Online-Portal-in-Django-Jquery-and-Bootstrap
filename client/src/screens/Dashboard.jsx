@@ -8,9 +8,10 @@ import useComplaintStore from "../stores/complaintStore";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
   const { Title, Paragraph } = Typography;
   const { user } = useAuthStore();
-  const { complaints, fetchComplaints, createComplaint, deleteComplaint } = useComplaintStore();
+  const { complaints, fetchComplaints, createComplaint, deleteComplaint, updateComplaint } = useComplaintStore();
 
   console.log('Complaints:', complaints);
 
@@ -36,6 +37,19 @@ const Dashboard = () => {
     }
   }
 
+  const updateComplaintUtil = async (id, complaintData) => {
+    const response = await updateComplaint(id, complaintData);
+    if (response && response.status === 200) {
+      await fetchComplaints();
+      setOpen(false);
+    }
+  }
+
+  const openUpdateDrawer = (complaint) => {
+    setSelectedComplaint(complaint);
+    setOpen(true);
+  }
+
   useEffect(() => {
     fetchComplaints();
   }
@@ -43,7 +57,7 @@ const Dashboard = () => {
 
   return (
     <div
-      style={{ padding: "16px", margin: "16px", backgroundColor: "#f0f2f5" }}
+      style={{ padding: "16px", margin: "16px 32px", backgroundColor: "#e6f7ff" }}
     >
       <Title level={1}>
         {user ? `Welcome to the dashboard, ${user.userData.email}` : ""}
@@ -56,8 +70,11 @@ const Dashboard = () => {
                 <p>{complaint.description}</p>
                 <p><strong>Location:</strong> {complaint.location}</p>
                 <p><strong>Category:</strong> {complaint.category}</p>
-                <Button type="primary" onClick={() => deleteComplaintUtil(complaint.id)} backgroundColor="red">
+                <Button type="primary" onClick={() => deleteComplaintUtil(complaint.id)} backgroundcolor="red">
                   Delete
+                </Button>
+                <Button type="primary" onClick={() => openUpdateDrawer(complaint)} style={{ marginLeft: "8px", backgroundColor: "#211C84" }}>
+                  Update
                 </Button>
               </Card>
             </Col>
@@ -80,7 +97,7 @@ const Dashboard = () => {
         <Button type="primary" onClick={onClose}>
           Close
         </Button>
-        <ComplaintForm addComplaint={addComplaintUtil} />
+        <ComplaintForm addComplaint={addComplaintUtil} updateComplaint={updateComplaintUtil} complaint={selectedComplaint} />
       </Drawer>
       <Space style={{ marginTop: "16px" }}>
         <Button type="primary" onClick={showDrawer}>

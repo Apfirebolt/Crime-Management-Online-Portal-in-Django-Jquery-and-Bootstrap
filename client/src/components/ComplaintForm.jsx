@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import { Form, Input, Button, Select } from "antd";
 import PropTypes from "prop-types";
 
-const ComplaintForm = ({ addComplaint }) => {
+const ComplaintForm = (props) => {
+  const [form] = Form.useForm();
+  const { addComplaint, updateComplaint, complaint } = props;
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    if (complaint) {
+      updateComplaint(complaint.id, values);
+      return;
+    }
     addComplaint(values);
   };
 
@@ -21,9 +28,24 @@ const ComplaintForm = ({ addComplaint }) => {
     { value: 6, label: "Other" },
   ];
 
+  useEffect(() => {
+    if (complaint) {
+      console.log("complaint", complaint);
+      form.setFieldsValue({
+        title: complaint.title,
+        description: complaint.description,
+        category: complaint.category,
+        location: complaint.location,
+      });
+    } else {
+      form.resetFields(); // Reset the form if no complaint is passed
+    }
+  }, [complaint, form]); // Add form to the dependency array
+
   return (
     <div style={{ maxWidth: "500px", margin: "auto", padding: "50px" }}>
       <Form
+        form={form}
         name="complaint"
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -75,6 +97,8 @@ const ComplaintForm = ({ addComplaint }) => {
 
 ComplaintForm.propTypes = {
   addComplaint: PropTypes.func.isRequired,
+  updateComplaint: PropTypes.func.isRequired,
+  complaint: PropTypes.object,
 };
 
 export default ComplaintForm;
