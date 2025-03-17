@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../plugins/interceptor";
 import { Card, Typography, List, Drawer, Space, Button, Row, Col } from "antd";
 import Loader from "../components/Loader";
 import ComplaintForm from "../components/ComplaintForm";
@@ -13,9 +12,8 @@ const Dashboard = () => {
   const { user } = useAuthStore();
   const { complaints, fetchComplaints, createComplaint, deleteComplaint, updateComplaint } = useComplaintStore();
 
-  console.log('Complaints:', complaints);
-
   const showDrawer = () => {
+    setSelectedComplaint(null);
     setOpen(true);
   };
   const onClose = () => {
@@ -69,7 +67,7 @@ const Dashboard = () => {
               <Card title={`${complaint.title}`} style={{ marginBottom: "16px" }}>
                 <p>{complaint.description}</p>
                 <p><strong>Location:</strong> {complaint.location}</p>
-                <p><strong>Category:</strong> {complaint.category}</p>
+                <p><strong>Category:</strong> {complaint.category_name}</p>
                 <Button type="primary" onClick={() => deleteComplaintUtil(complaint.id)} backgroundcolor="red">
                   Delete
                 </Button>
@@ -94,10 +92,7 @@ const Dashboard = () => {
         onClose={onClose}
         open={open}
       >
-        <Button type="primary" onClick={onClose}>
-          Close
-        </Button>
-        <ComplaintForm addComplaint={addComplaintUtil} updateComplaint={updateComplaintUtil} complaint={selectedComplaint} />
+        <ComplaintForm addComplaint={addComplaintUtil} updateComplaint={updateComplaintUtil} complaint={selectedComplaint} onClose={onClose} />
       </Drawer>
       <Space style={{ marginTop: "16px" }}>
         <Button type="primary" onClick={showDrawer}>

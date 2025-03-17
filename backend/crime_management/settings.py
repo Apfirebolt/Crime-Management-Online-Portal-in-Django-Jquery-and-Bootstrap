@@ -83,8 +83,6 @@ ROOT_URLCONF = 'crime_management.urls'
 
 CLIENT_BUILD_DIR = os.path.join(os.path.dirname(BASE_DIR), 'client', 'dist')
 
-print('Client Build ', CLIENT_BUILD_DIR)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -194,7 +192,7 @@ USE_TZ = True
 
 
 
-STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(CLIENT_BUILD_DIR, 'assets'),

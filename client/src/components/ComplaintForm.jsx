@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const ComplaintForm = (props) => {
   const [form] = Form.useForm();
-  const { addComplaint, updateComplaint, complaint } = props;
+  const { addComplaint, updateComplaint, onClose, complaint } = props;
 
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -43,13 +43,14 @@ const ComplaintForm = (props) => {
   }, [complaint, form]); // Add form to the dependency array
 
   return (
-    <div style={{ maxWidth: "500px", margin: "auto", padding: "50px" }}>
+    <div style={{ maxWidth: "500px", margin: "auto", padding: "50px", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Form
         form={form}
         name="complaint"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        style={{ width: "100%" }}
       >
         <Form.Item
           name="title"
@@ -62,7 +63,7 @@ const ComplaintForm = (props) => {
           name="description"
           rules={[{ required: true, message: "Please input the description!" }]}
         >
-          <Input.TextArea placeholder="Description" />
+          <Input.TextArea placeholder="Description" rows="5" />
         </Form.Item>
 
         <Form.Item
@@ -86,8 +87,11 @@ const ComplaintForm = (props) => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-            Submit Complaint
+          <Button type="primary" htmlType="submit" style={{ width: "45%", marginRight: "10%" }}>
+            Submit
+          </Button>
+          <Button type="default" htmlType="button" style={{ width: "45%" }} onClick={onClose}>
+            Cancel
           </Button>
         </Form.Item>
       </Form>
@@ -97,6 +101,7 @@ const ComplaintForm = (props) => {
 
 ComplaintForm.propTypes = {
   addComplaint: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   updateComplaint: PropTypes.func.isRequired,
   complaint: PropTypes.object,
 };
